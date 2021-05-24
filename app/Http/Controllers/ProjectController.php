@@ -13,6 +13,13 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+       function __construct()
+    {
+         $this->middleware('permission:project-list|project-create|project-edit|project-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:project-create', ['only' => ['create','store']]);
+         $this->middleware('permission:project-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:project-delete', ['only' => ['destroy']]);
+    }
     public function index()
     {
         $data['projects']=Project::leftJoin('users','users.id','=','projects.project_owner')->select('projects.project_name','projects.project_desc','projects.id as pro_id','users.name','users.id')->get();

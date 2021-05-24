@@ -7,6 +7,7 @@ use App\User;
 use App\Designation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 class EmployeeController extends Controller
 {
     /**
@@ -30,6 +31,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $data['roles'] = Role::pluck('name','name')->all();
         $data['designtions']=Designation::get();
         return view('employee.add',$data);
     }
@@ -59,6 +61,7 @@ class EmployeeController extends Controller
             'email' => $request->o_email,
             'password' => Hash::make($request->password),
         ]);
+        $user->assignRole($request->input('roles'));
         Employee::create([
             'user_id'=>$user->id,
             'emp_name'=>$request->name,

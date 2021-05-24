@@ -146,6 +146,12 @@
                 </div>
                 @endif
                 </div>
+                 <div class="col-md-3">
+        <div class="form-group">
+            <strong>Role:</strong>
+            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+        </div>
+    </div>
                   <div class="col-md-3">
                   <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>

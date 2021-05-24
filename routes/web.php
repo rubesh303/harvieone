@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function() {
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get("/home",["uses"=>"HomeController@index","middleware"=>"checkemployee"]);
 Route::get('/addemployee', 'EmployeeController@create')->name('addemployee');
 Route::post('/saveemployee', 'EmployeeController@store')->name('saveemployee');
 Route::get('/employeelist', 'EmployeeController@index')->name('employeelist');
@@ -36,3 +37,5 @@ Route::post('/savetask', 'TaskController@store')->name('savetask');
 Route::get('/edit_task/{id}', 'TaskController@edit')->name('edit_task');
 Route::get('/delete_task/{id}', 'TaskController@destroy')->name('delete_task');
 Route::post('/updatetask', 'TaskController@update')->name('updatetask');
+Route::resource('roles', RoleController::class);
+});

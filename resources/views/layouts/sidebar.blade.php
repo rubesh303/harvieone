@@ -75,15 +75,17 @@
                   <p>Add projects</p>
                 </a>
               </li>
+               @can('project-list')
               <li class="nav-item">
                 <a href="{{ url ('projectlist')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Project List</p>
                 </a>
               </li>
-            
+            @endcan
             </ul>
           </li>
+          <li><a class="nav-link" href="{{ route('roles.index') }}">Roles</a></li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>

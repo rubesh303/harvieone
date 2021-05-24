@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Designation;
 use App\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 class UsersTableDataSeeder extends Seeder
 {
     /**
@@ -13,13 +15,13 @@ class UsersTableDataSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+       $user= User::create([
 
 	            'name' => "Admin",
 
-	            'email' => 'admin@mail.com',
+	            'email' => 'admin@gmail.com',
 
-	            'password' => Hash::make(12345678)
+	            'password' => Hash::make(123456)
 
 	        ]);
         $designation=array('Developer','Tester','Engineer');
@@ -28,6 +30,12 @@ class UsersTableDataSeeder extends Seeder
                 'designation_name' => $value
             ]);
         }
-        
+        $role = Role::create(['name' => 'Admin']);
+     
+        $permissions = Permission::pluck('id','id')->all();
+   
+        $role->syncPermissions($permissions);
+     
+        $user->assignRole([1]);
     }
 }
